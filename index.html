@@ -7,40 +7,70 @@
   <style>
     :root {
       color-scheme: light;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --accent: #3730a3;
+      --card: #ffffff;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       background: linear-gradient(160deg, #f4f7ff 0%, #e8eefc 100%);
-      color: #1f2937;
+      color: var(--text);
     }
 
-    main {
-      width: min(560px, calc(100% - 32px));
-      padding: 36px 32px;
-      border-radius: 20px;
-      background: #ffffff;
-      box-shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 8%;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+      transition: box-shadow 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+    }
+
+    header .logo {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    header a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.2s ease;
+    }
+
+    header a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      width: min(880px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 72px 0;
+    }
+
+    .hero {
       text-align: center;
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: 2rem;
-    }
-
-    p {
-      margin: 0;
-      line-height: 1.7;
-      color: #4b5563;
+      padding-top: 88px;
     }
 
     .badge {
@@ -49,16 +79,144 @@
       padding: 6px 12px;
       border-radius: 999px;
       background: #eef2ff;
-      color: #3730a3;
+      color: var(--accent);
       font-size: 0.85rem;
+    }
+
+    h1, h2 {
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: 0 12px 32px rgba(31, 41, 55, 0.07);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(31, 41, 55, 0.12);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: scale(1.04);
+      opacity: 0.92;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+
+    footer {
+      text-align: center;
+      padding: 32px 16px 48px;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="badge">Cursor Test</div>
-    <h1>你好，GitHub</h1>
-    <p>这是一个用于测试提交的简单 HTML 页面。页面已创建并推送到仓库。</p>
-  </main>
+  <header id="topbar">
+    <div class="logo">Cursor Test</div>
+    <nav>
+      <a href="#features">功能</a>
+      <a href="#about">关于</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="badge reveal">Cursor Test</div>
+    <h1 class="reveal delay-1">你好，GitHub</h1>
+    <p class="reveal delay-2">这是一个用于测试提交的简单 HTML 页面。向下滚动看看渐入效果。</p>
+    <a class="cta reveal delay-3" href="#features">看看下面</a>
+  </section>
+
+  <section id="features">
+    <h2 class="reveal">页面里的小效果</h2>
+    <p class="reveal delay-1">滚动时区块会渐入，离开视口后再渐出。卡片悬停会轻轻浮起。</p>
+    <div class="cards">
+      <article class="card reveal">
+        <h3>滚动渐入</h3>
+        <p>内容进入视口时淡入上移，离开后再淡出。</p>
+      </article>
+      <article class="card reveal delay-1">
+        <h3>卡片悬停</h3>
+        <p>鼠标移上去时卡片轻微抬起，阴影也会加深。</p>
+      </article>
+      <article class="card reveal delay-2">
+        <h3>顶栏阴影</h3>
+        <p>向下滚动后，顶部导航会多一层浅阴影。</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="reveal">保持简单</h2>
+    <p class="reveal delay-1">没有复杂动画，只加了常见页面里会用到的过渡效果，方便你继续测试提交流程。</p>
+  </section>
+
+  <footer class="reveal">页面已创建，等待你的下一步指示。</footer>
+
+  <script>
+    const header = document.getElementById("topbar");
+    const revealItems = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("visible", entry.isIntersecting);
+      });
+    }, { threshold: 0.18 });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 8);
+    }, { passive: true });
+  </script>
 </body>
 </html>
